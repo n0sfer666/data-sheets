@@ -9,10 +9,11 @@ export type TCard = {
   dateEnd: number;
   data: TCardData[];
 }
+export type TGroup = {
+  title: string
+  items: TCard[]
+}
 export type TRandomData = {
   title: string;
-  items: {
-    title: string;
-    items: TCard[];
-  }[];
+  items: TGroup[];
 }
