@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import Layout from './components/layout/layout';
 import randomData from './utils/getRandomData';
 import { TRandomData } from './utils/randomData.types';
 
@@ -11,15 +12,18 @@ importAll(require.context('./', true, /\.scss$/));
 function Index() {
   const data: TRandomData[] = randomData();
   return (
-    <div>
-      <main>
-        <h1>Place for Net</h1>
-      </main>
-      <footer>
-        <h2>Search</h2>
-        <h2>Hidden</h2>
-      </footer>
-    </div>
+    <Layout footer={(
+      <>
+        <span>X</span>
+        <span>O</span>
+      </>
+)}
+    >
+      {
+        new Array(100).fill(<h1>NET</h1>).map((item) => (<div key={Math.random()}>{item}</div>))
+      }
+    </Layout>
+
   );
 }
 
