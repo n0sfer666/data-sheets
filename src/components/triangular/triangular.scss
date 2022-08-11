@@ -1,0 +1,15 @@
+.Triangular {
+  display: inline-block;
+  width: 16px;
+
+  &__symbol {
+    display: inline;
+    vertical-align: middle;
+  }
+
+  &_state {
+    &_isUp {
+      transform: rotate(180deg);
+    }
+  }
+}
