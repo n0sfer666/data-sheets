@@ -25,7 +25,11 @@ module.exports = {
     'react/jsx-filename-extension': ['off'],
     'import/extensions': ['off'],
     'import/no-unresolved': ['off'],
+    'react/no-array-index-key': ['off'],
     'no-unused-expressions': ['error', { allowTernary: true }],
     'no-param-reassign': ['error', { props: false }],
+    'react/jsx-props-no-spreading': ['error', {
+      custom: 'ignore',
+    }],
   },
 };
