@@ -19,6 +19,7 @@ $font: Roboto, sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 
     &-title {
       display: flex;
@@ -44,8 +45,9 @@ $font: Roboto, sans-serif;
     }
   }
   &__data {
-    display: none;
+    display: table;
     width: 100%;
+    font: 300 12px/12px $font;
 
     & tr {
       height: 16px;
@@ -64,6 +66,7 @@ $font: Roboto, sans-serif;
         border-left: none;
         border-right: none;
         text-align: center;
+        cursor: pointer;
       }
 
       &:not(:first-child, :last-child) {
@@ -82,7 +85,7 @@ $font: Roboto, sans-serif;
     & td {
       border-collapse: collapse;
       padding-left: 3px;
-      vertical-align: middle;
+      vertical-align: bottom;
 
       &:not(:first-child, :last-child) {
         border: 1px solid $color-border-cell;
@@ -99,12 +102,6 @@ $font: Roboto, sans-serif;
       }
       &:last-child {
         width: 67px;
-      }
-    }
-
-    &_state {
-      &_isOpen {
-        display: table;
       }
     }
   }

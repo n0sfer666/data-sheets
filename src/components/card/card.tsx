@@ -23,9 +23,8 @@ const styles = {
 };
 
 function Card({
-  title, subTitle, dateStart, dateEnd, data,
+  title, subTitle, dateStart, dateEnd, data, onHeaderClick, isOpen, cardIndex,
 }: TCardProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [isSortByIndex, setIsSortByIndex] = useState(true);
   const [isReverse, setIsReverse] = useState(false);
   const [tableData, setTableData] = useState(data.map(
@@ -34,14 +33,14 @@ function Card({
 
   const callbacks = {
     onHeaderClick: useCallback(() => {
-      setIsOpen(!isOpen);
+      onHeaderClick(cardIndex);
     }, [isOpen]),
     onTableHeaderClick: useCallback((event: React.MouseEvent) => {
       event.stopPropagation();
       const { currentTarget } = event;
-      const isIndexButton = currentTarget.getAttribute('name') === 'index';
+      const isIndexButton = currentTarget.getAttribute('data-name') === 'index';
       if (isIndexButton) {
-        setIsReverse(!isReverse);
+        setIsReverse(isIndexButton && !isReverse);
       } else {
         setIsReverse(!isSortByIndex && !isReverse);
       }
@@ -65,53 +64,53 @@ function Card({
 
   return (
     <table className={styles.main}>
-      <button type="button" className={styles.header.main} onClick={callbacks.onHeaderClick}>
-        <div className={styles.header.titleContainer}>
-          <strong className={styles.header.title}>{title}</strong>
-          <span className={styles.header.subTitle}>{subTitle}</span>
-        </div>
-        <div className={styles.header.date}>{`${formattedDate.start} - ${formattedDate.end}`}</div>
-      </button>
-      <tbody className={isOpen ? styles.data.states.isOpen : styles.data.main}>
+      <thead>
         <tr>
-          <th>
-            <button type="button" name="index" onClick={callbacks.onTableHeaderClick}>
-              #
-              {(isSortByIndex) && (<Triangular isUp={!isReverse} />)}
-            </button>
-          </th>
-          <th>
-            <button type="button" name="title">
-              Title
-            </button>
-          </th>
-          <th>
-            <button type="button" name="number" onClick={callbacks.onTableHeaderClick}>
-              Number
-              {(!isSortByIndex) && (<Triangular isUp={!isReverse} />)}
-            </button>
+          <th className={styles.header.main} onClick={callbacks.onHeaderClick}>
+            <div className={styles.header.titleContainer}>
+              <strong className={styles.header.title}>{title}</strong>
+              <span className={styles.header.subTitle}>{subTitle}</span>
+            </div>
+            <div className={styles.header.date}>{`${formattedDate.start} - ${formattedDate.end}`}</div>
           </th>
         </tr>
-        {
-          new Array(tableData.length < 13 ? 13 : tableData.length).fill(
-            <tr>
-              <td />
-              <td />
-              <td />
-            </tr>,
-          ).map((item, index) => (
+      </thead>
+      {(isOpen) && (
+        <tbody className={styles.data.main}>
+          <tr>
+            <th key="index" data-name="index" onClick={callbacks.onTableHeaderClick}>
+              #
+              {(isSortByIndex) && (<Triangular isUp={!isReverse} />)}
+            </th>
+            <th key="title">
+              Title
+            </th>
+            <th key="number" data-name="number" onClick={callbacks.onTableHeaderClick}>
+              Number
+              {(!isSortByIndex) && (<Triangular isUp={!isReverse} />)}
+            </th>
+          </tr>
+          {
+          new Array(tableData.length < 13 ? 13 : tableData.length).fill(null).map((item, index) => (
             tableData[index]
               ? (
-                <tr>
-                  <td>{tableData[index].id}</td>
-                  <td>{tableData[index].title}</td>
-                  <td>{tableData[index].number}</td>
+                <tr key={`tableRow-${index + 1}`}>
+                  <td key="index">{tableData[index].id}</td>
+                  <td key="title">{tableData[index].title}</td>
+                  <td key="number">{tableData[index].number}</td>
                 </tr>
               )
-              : item
+              : (
+                <tr key={`tableRow-${index + 1}`}>
+                  <td key="index" />
+                  <td key="title" />
+                  <td key="number" />
+                </tr>
+              )
           ))
         }
-      </tbody>
+        </tbody>
+      )}
     </table>
   );
 }

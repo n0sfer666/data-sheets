@@ -17,8 +17,16 @@ const styles = {
 
 function NetElement({ title, items }: TNetElementProps) {
   const [isShowCards, setIsShowCards] = useState(false);
+  const [cardsOpenState, setCardOpenState] = useState(new Array(items.length).fill(false));
   const callbacks = {
-    onHeaderClick: useCallback(() => { setIsShowCards(!isShowCards); }, [isShowCards]),
+    onHeaderClick: useCallback(() => {
+      setIsShowCards(!isShowCards);
+    }, [isShowCards]),
+    onOpenCard: useCallback((cardIndex: number) => {
+      setCardOpenState(
+        cardsOpenState.map((cardState, index) => (cardIndex === index ? !cardState : false)),
+      );
+    }, [cardsOpenState]),
   };
   return (
     <div className={styles.main}>
@@ -31,8 +39,13 @@ function NetElement({ title, items }: TNetElementProps) {
         <div className={styles.content.main}>
           {
           items.map((item, index) => (
-            <div className={styles.content.item} key={`NetElement-item-${index}`}>
-              <Card key={`${title}-Card-${item.title}-${index}`} {...item} />
+            <div className={styles.content.item} key={`Card-${index}`}>
+              <Card
+                cardIndex={index}
+                onHeaderClick={callbacks.onOpenCard}
+                isOpen={cardsOpenState[index]}
+                {...item}
+              />
             </div>
           ))
         }
