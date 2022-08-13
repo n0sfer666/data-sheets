@@ -1,0 +1,47 @@
+$indent: 16px;
+$indent-line: 12px;
+$font: Roboto, sans-serif;
+$color-header: #2E465C;
+$color-header-text: #fff;
+$color-line: #999;
+
+.NetElement {
+  position: relative;
+  // margin-bottom: -16px;
+
+  &__header {
+    width: 67px;
+    height: 36px;
+    border-radius: 2px;
+    background-color: $color-header;
+
+    &-text {
+      font: 400 16px/19px $font;
+      color: $color-header-text;
+    }
+  }
+
+  &__content {
+    max-width: 1800px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: $indent;
+    padding-left: calc($indent + $indent-line + 10px);
+
+    &-item {
+      margin-bottom: $indent;
+    }
+
+    &-verticalLine {
+      position: absolute;
+      width: 2px;
+      height: calc(100% - $indent);
+      bottom: $indent;
+      left: $indent-line;
+      z-index: -1;
+      background-color: $color-line;
+    }
+  }
+}
