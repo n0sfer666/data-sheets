@@ -60,6 +60,7 @@ $font: Roboto, sans-serif;
     & th {
       border-collapse: collapse;
       border: 1px solid $color-main;
+      vertical-align: bottom;
       text-align: left;
 
       &:first-child, &:last-child {

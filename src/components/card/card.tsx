@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Triangular from '../triangular/triangular';
 import { TCardProps } from './card.types';
 
@@ -26,32 +26,26 @@ function Card({
   title, subTitle, dateStart, dateEnd, data, onHeaderClick, isOpen, cardIndex,
 }: TCardProps) {
   const [isSortByIndex, setIsSortByIndex] = useState(true);
-  const [isReverse, setIsReverse] = useState(false);
   const [tableData, setTableData] = useState(data.map(
     (item, index) => ({ ...item, id: index + 1 }),
   ) as Array<Record<string, number | string>>);
 
   const callbacks = {
-    onHeaderClick: useCallback(() => {
+    onHeaderClick: () => {
       onHeaderClick(cardIndex);
-    }, [isOpen]),
-    onTableHeaderClick: useCallback((event: React.MouseEvent) => {
+    },
+    onTableHeaderClick: (event: React.MouseEvent) => {
       event.stopPropagation();
       const { currentTarget } = event;
       const isIndexButton = currentTarget.getAttribute('data-name') === 'index';
-      if (isIndexButton) {
-        setIsReverse(isIndexButton && !isReverse);
-      } else {
-        setIsReverse(!isSortByIndex && !isReverse);
-      }
       setIsSortByIndex(isIndexButton);
       setTableData(tableData.sort((a, b) => {
         const key = isIndexButton ? 'id' : 'number';
-        if (Number(a[key]) < Number(b[key])) return isReverse ? -1 : 1;
-        if (Number(a[key]) > Number(b[key])) return isReverse ? 1 : -1;
+        if (Number(a[key]) < Number(b[key])) return -1;
+        if (Number(a[key]) > Number(b[key])) return 1;
         return 0;
       }));
-    }, [isSortByIndex, isReverse, tableData]),
+    },
   };
   const dates = {
     start: new Date(dateStart),
@@ -80,14 +74,14 @@ function Card({
           <tr>
             <th key="index" data-name="index" onClick={callbacks.onTableHeaderClick}>
               #
-              {(isSortByIndex) && (<Triangular isUp={!isReverse} />)}
+              {(isSortByIndex) && (<Triangular />)}
             </th>
             <th key="title">
               Title
             </th>
             <th key="number" data-name="number" onClick={callbacks.onTableHeaderClick}>
               Number
-              {(!isSortByIndex) && (<Triangular isUp={!isReverse} />)}
+              {(!isSortByIndex) && (<Triangular />)}
             </th>
           </tr>
           {

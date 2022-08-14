@@ -7,6 +7,7 @@ $color-line: #999;
 
 .App {
   position: relative;
+  height: auto;
 
   &__header {
     width: 67px;
@@ -21,6 +22,7 @@ $color-line: #999;
   }
 
   &__content {
+    position: relative;
     max-width: 1800px;
     width: 100%;
     padding-left: calc($indent + $indent-line + 10px);
@@ -35,27 +37,20 @@ $color-line: #999;
       &:not(:first-child) {
         margin-top: 15px;
       }
-
-      &:not(:first-child, :nth-child(2), :last-child) {
-        margin-top: 66px;
-      } 
-
-      &:last-child {
-        position: absolute;
-        bottom: 0;
-        transform: translateY(calc(100% + 64px));
-      }
     }
 
     &-line {
       &-vertical {
         position: absolute;
         width: 2px;
-        height: calc(100% + 64px);
-        bottom: -84px;
+        top: -16px;
         left: $indent-line;
         z-index: -1;
         background-color: $color-line;
+
+        & + .App__content-item:last-child {
+          margin-top: 17px;
+        }
       }
       &-horizontal {
         position: absolute;

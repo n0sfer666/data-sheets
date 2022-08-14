@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Card from '../card/card';
 import { TNetElementProps } from './net-element.types';
 
@@ -15,25 +15,28 @@ const styles = {
   },
 };
 
-function NetElement({ title, items }: TNetElementProps) {
-  const [isShowCards, setIsShowCards] = useState(false);
+function NetElement({
+  title, items, onOpen, netElementIndex, isOpen,
+}: TNetElementProps) {
   const [cardsOpenState, setCardOpenState] = useState(new Array(items.length).fill(false));
   const callbacks = {
-    onHeaderClick: useCallback(() => {
-      setIsShowCards(!isShowCards);
-    }, [isShowCards]),
-    onOpenCard: useCallback((cardIndex: number) => {
+    onHeaderClick: () => {
+      onOpen(netElementIndex);
+      setCardOpenState(new Array(cardsOpenState.length).fill(false));
+    },
+    onOpenCard: (cardIndex: number) => {
       setCardOpenState(
         cardsOpenState.map((cardState, index) => (cardIndex === index ? !cardState : false)),
       );
-    }, [cardsOpenState]),
+      onOpen(netElementIndex, true);
+    },
   };
   return (
     <div className={styles.main}>
       <button className={styles.header.main} type="button" onClick={callbacks.onHeaderClick}>
         <h3 className={styles.header.text}>{title}</h3>
       </button>
-      {(isShowCards) && (
+      {(isOpen) && (
       <>
         <div className={styles.content.verticalLine} />
         <div className={styles.content.main}>

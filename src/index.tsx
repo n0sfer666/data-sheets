@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Layout from './components/layout/layout';
+import App from './pages/app/app';
 import randomData from './utils/getRandomData';
 import { TRandomData } from './utils/randomData.types';
 
@@ -19,9 +20,7 @@ function Index() {
       </>
 )}
     >
-      {
-        new Array(100).fill(<h1>NET</h1>).map((item) => (<div key={Math.random()}>{item}</div>))
-      }
+      <App data={data} />
     </Layout>
 
   );
