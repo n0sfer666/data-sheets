@@ -31,7 +31,7 @@ function NetElement({ title, items }: TNetElementProps) {
   return (
     <div className={styles.main}>
       <button className={styles.header.main} type="button" onClick={callbacks.onHeaderClick}>
-        <h2 className={styles.header.text}>{title}</h2>
+        <h3 className={styles.header.text}>{title}</h3>
       </button>
       {(isShowCards) && (
       <>

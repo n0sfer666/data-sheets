@@ -68,8 +68,8 @@ function Card({
         <tr>
           <th className={styles.header.main} onClick={callbacks.onHeaderClick}>
             <div className={styles.header.titleContainer}>
-              <strong className={styles.header.title}>{title}</strong>
-              <span className={styles.header.subTitle}>{subTitle}</span>
+              <h4 className={styles.header.title}>{title}</h4>
+              <h5 className={styles.header.subTitle}>{subTitle}</h5>
             </div>
             <div className={styles.header.date}>{`${formattedDate.start} - ${formattedDate.end}`}</div>
           </th>
