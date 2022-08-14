@@ -7,13 +7,13 @@ $color-line: #999;
 
 .NetElement {
   position: relative;
-  // margin-bottom: -16px;
 
   &__header {
     width: 67px;
     height: 36px;
     border-radius: 2px;
     background-color: $color-header;
+    cursor: pointer;
 
     &-text {
       font: 400 16px/19px $font;
