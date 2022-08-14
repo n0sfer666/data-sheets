@@ -31,7 +31,7 @@ function Net({ title, items }: TNetProps) {
         <div className={styles.content.lines.vertical} />
         {
           items.map((item, index) => (
-            <div key={`Net-item-${index}`} className={styles.content.item}>
+            <div className={styles.content.item} key={`Net-item-${index}`}>
               <div className={styles.content.lines.horizontal} />
               <NetElement {...item} />
             </div>
