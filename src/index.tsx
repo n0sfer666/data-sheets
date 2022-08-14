@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import Finder from './components/finder/finder';
 import Layout from './components/layout/layout';
 import App from './pages/app/app';
 import randomData from './utils/getRandomData';
@@ -16,7 +17,7 @@ function Index() {
     <Layout footer={(
       <>
         <span>X</span>
-        <span>O</span>
+        <Finder />
       </>
 )}
     >
