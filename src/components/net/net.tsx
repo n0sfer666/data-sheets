@@ -24,6 +24,7 @@ function Net({
   title, items, netIndex, onOpenSubNet,
 }: TNetProps) {
   const refContent = useRef<HTMLDivElement>(null);
+  const refLastItem = useRef<HTMLDivElement>(null);
   const [heightVertLine, setHeightVertLine] = useState(0);
   const [netElementsOpenState, setNetElementsOpenState] = useState(
     new Array(items.length).fill(false),
@@ -39,13 +40,22 @@ function Net({
         );
       }
       if (netElementIndex < items.length - 1) {
-        onOpenSubNet(netIndex);
         setIsChangeNotLastState(!isChangeNotLastState);
       }
+      onOpenSubNet(netIndex);
     },
   };
   useEffect(() => {
-    setHeightVertLine(refContent.current?.clientHeight as number);
+    const height = {
+      container: refContent.current?.clientHeight as number,
+      lastItem: refLastItem.current?.clientHeight as number,
+      additional: 36,
+    };
+    setHeightVertLine(
+      items.length === 1
+        ? height.additional
+        : height.container - height.lastItem + height.additional,
+    );
   }, [isChangeNotLastState]);
   return (
     <div className={styles.main}>
@@ -59,7 +69,11 @@ function Net({
         />
         {
           items.map((item, index) => (
-            <div className={styles.content.item} key={`Net-item-${index}`}>
+            <div
+              ref={items.length === (index + 1) ? refLastItem : null}
+              className={styles.content.item}
+              key={`Net-item-${index}`}
+            >
               <div className={styles.content.lines.horizontal} />
               <NetElement
                 onOpen={callbacks.onElementOpen}

@@ -5,4 +5,5 @@ export type TRemoverProps = {
   elementIndex: number
   onClick: Function
   onChange: Function
+  titles: string[]
 }

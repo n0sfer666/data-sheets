@@ -10,7 +10,7 @@ const styles = {
 };
 
 function Remover({
-  isOpen, elementIndex, onClick, onChange,
+  isOpen, elementIndex, onClick, onChange, titles,
 }: TRemoverProps) {
   const callbacks = {
     onButtonClick: () => {
@@ -19,8 +19,7 @@ function Remover({
     onSelectChange: (event: TChangeEvent) => {
       event.stopPropagation();
       const { value } = event.currentTarget;
-      onChange();
-      console.log(value);
+      onChange(Number(value));
     },
   };
   return (
@@ -30,9 +29,14 @@ function Remover({
       </button>
       {
         (isOpen) && (
-        <select className={styles.select} onChange={callbacks.onSelectChange}>
-          <option key={0} value="0">zero</option>
-          <option key={1} value="1">one</option>
+        <select
+          className={styles.select}
+          onChange={callbacks.onSelectChange}
+        >
+          <option key={`option-${titles.length}`} value={titles.length}>choose net...</option>
+          {
+            titles.map((title, index) => (<option key={`option-${index}`} value={index}>{title}</option>))
+          }
         </select>
         )
       }

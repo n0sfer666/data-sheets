@@ -37,6 +37,7 @@ function App({ data }: TAppProps) {
   const [netsShowState, setNetsShowState] = useState(
     new Array(data.length).fill(true),
   );
+  const [lastNetIndex, setLastNetIndex] = useState(data.length - 1);
   useEffect(() => {
     const height = {
       container: refContent.current?.clientHeight as number,
@@ -44,14 +45,14 @@ function App({ data }: TAppProps) {
       additional: 36,
     };
     setHeightVertLine(
-      data.length === 1
+      lastNetIndex === 0
         ? height.additional
         : height.container - height.lastItem + height.additional,
     );
   }, [isChangeNotLast]);
   const callbacks = {
-    onOpen: (index: number) => {
-      if (data.length > index + 1) {
+    onOpenNet: (netIndex: number) => {
+      if (lastNetIndex > netIndex) {
         setIsChangeNotLast(!isChangeNotLast);
       }
     },
@@ -61,12 +62,23 @@ function App({ data }: TAppProps) {
       );
     },
     onChangeFinder: (event: TChangeEvent) => { console.log('Finder'); },
-    onChangeRemover: (event: TChangeEvent) => { console.log('Remover'); },
+    onChangeRemover: (optionValue: number) => {
+      setNetsShowState(
+        netsShowState.map((isShow, index) => (index === optionValue ? !isShow : isShow)),
+      );
+      netsShowState.forEach((isOpen, index) => {
+        if (isOpen) setLastNetIndex(index);
+      });
+      if (lastNetIndex > optionValue) {
+        setIsChangeNotLast(!isChangeNotLast);
+      }
+    },
   };
   return (
     <Layout footer={(
       <>
         <Remover
+          titles={data.map((item) => item.title)}
           elementIndex={footerIndexes.remover}
           onClick={callbacks.onClickFooterElement}
           onChange={callbacks.onChangeRemover}
@@ -91,17 +103,18 @@ function App({ data }: TAppProps) {
             <div style={{ height: heightVertLine }} className={styles.content.lines.vertical} />
             {
             data.map((item, index) => (
-              <div
-                ref={data.length === (index + 1) ? refLastItem : null}
-                className={styles.content.item}
-                key={`Net-${index}`}
-              >
-                <div className={styles.content.lines.horizontal} />
-                {
-                  (netsShowState[index]) && (
-                    <Net netIndex={index} onOpenSubNet={callbacks.onOpen} {...item} />)
-                }
-              </div>
+              netsShowState[index]
+                ? (
+                  <div
+                    ref={lastNetIndex === index ? refLastItem : null}
+                    className={styles.content.item}
+                    key={`Net-${index}`}
+                  >
+                    <div className={styles.content.lines.horizontal} />
+                    <Net netIndex={index} onOpenSubNet={callbacks.onOpenNet} {...item} />
+                  </div>
+                )
+                : null
             ))
           }
           </div>
