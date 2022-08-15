@@ -1,5 +1,6 @@
 $color-bg: #C4C4C4;
 $color-input-bg: #fff;
+$color-input-active: #706081;
 .Remover {
   height: 36px;
   display: flex;
@@ -20,6 +21,10 @@ $color-input-bg: #fff;
     align-items: center;
   }
 
+  &__container {
+    position: relative;
+  }
+
   &__select {
     border: none;
     width: 107px;
@@ -27,5 +32,19 @@ $color-input-bg: #fff;
     background: $color-input-bg;
     border-radius: 50px;
     margin-right: 8px;
+    padding-left: 12px;
+    appearance: none;
+    cursor: pointer;
+
+    &-triangle {
+      position: absolute;
+      right: 10px;
+      top: -2px;
+    }
+
+    &:hover, &:focus, &:active {
+      border: 1px solid $color-input-active;
+      outline: none;
+    }
   }
 }
