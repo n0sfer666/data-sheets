@@ -12,7 +12,7 @@ const styles = {
 };
 
 function Remover({
-  isOpen, elementIndex, onClick, onChange, titles,
+  isOpen, elementIndex, onClick, onChange, titles, netsShowState,
 }: TRemoverProps) {
   const callbacks = {
     onButtonClick: () => {
@@ -38,7 +38,15 @@ function Remover({
           >
             <option key={`option-${titles.length}`} value={titles.length}>choose net...</option>
             {
-            titles.map((title, index) => (<option key={`option-${index}`} value={index}>{title}</option>))
+            titles.map((title, index) => (
+              <option
+                key={`option-${index}`}
+                value={index}
+                className={!netsShowState[index] ? 'disabled' : ''}
+              >
+                {title}
+              </option>
+            ))
           }
           </select>
           <div className={styles.selectTriangle}>

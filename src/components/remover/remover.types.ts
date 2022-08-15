@@ -6,4 +6,5 @@ export type TRemoverProps = {
   onClick: Function
   onChange: Function
   titles: string[]
+  netsShowState: boolean[]
 }

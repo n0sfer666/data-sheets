@@ -85,6 +85,7 @@ function App({ data }: TAppProps) {
           onClick={callbacks.onClickFooterElement}
           onChange={callbacks.onChangeRemover}
           isOpen={footerOpenState[footerIndexes.remover]}
+          netsShowState={netsShowState}
         />
         <Finder
           elementIndex={footerIndexes.finder}
