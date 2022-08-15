@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TChangeEvent } from '../../index.types';
+import React from 'react';
+import { TChangeEvent } from '../../pages/app/app.types';
 import LensSvg from '../lens-svg/lens-svg';
 import { TFinderProps } from './finder.types';
 
