@@ -21,16 +21,22 @@ const styles = {
   },
 };
 
+const footerIndexes = {
+  remover: 0,
+  finder: 1,
+};
+
 function App({ data }: TAppProps) {
   const refContent = useRef<HTMLDivElement>(null);
   const refLastItem = useRef<HTMLDivElement>(null);
   const [isChangeNotLast, setIsChangeNotLast] = useState(false);
   const [heightVertLine, setHeightVertLine] = useState(0);
-  const [footerOpenState, setFooterOpenState] = useState([false, false]);
-  const footerIndexes = {
-    remover: 0,
-    finder: 1,
-  };
+  const [footerOpenState, setFooterOpenState] = useState(
+    new Array(Object.keys(footerIndexes).length).fill(false),
+  );
+  const [netsShowState, setNetsShowState] = useState(
+    new Array(data.length).fill(true),
+  );
   useEffect(() => {
     const height = {
       container: refContent.current?.clientHeight as number,
@@ -79,17 +85,28 @@ function App({ data }: TAppProps) {
         <button className={styles.header.main} type="button">
           <h1 className={styles.header.text}>data</h1>
         </button>
-        <div className={styles.content.main} ref={refContent}>
-          <div style={{ height: heightVertLine }} className={styles.content.lines.vertical} />
-          {
-          data.map((item, index) => (
-            <div ref={data.length === (index + 1) ? refLastItem : null} className={styles.content.item} key={`Net-${index}`}>
-              <div className={styles.content.lines.horizontal} />
-              <Net netIndex={index} onOpenSubNet={callbacks.onOpen} {...item} />
-            </div>
-          ))
+        {
+          (netsShowState.reduce((total, next) => total || next)) && (
+          <div className={styles.content.main} ref={refContent}>
+            <div style={{ height: heightVertLine }} className={styles.content.lines.vertical} />
+            {
+            data.map((item, index) => (
+              <div
+                ref={data.length === (index + 1) ? refLastItem : null}
+                className={styles.content.item}
+                key={`Net-${index}`}
+              >
+                <div className={styles.content.lines.horizontal} />
+                {
+                  (netsShowState[index]) && (
+                    <Net netIndex={index} onOpenSubNet={callbacks.onOpen} {...item} />)
+                }
+              </div>
+            ))
+          }
+          </div>
+          )
         }
-        </div>
       </div>
     </Layout>
   );
