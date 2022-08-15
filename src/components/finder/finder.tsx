@@ -15,6 +15,7 @@ function Finder({
   const callbacks = {
     onButtonClick: () => {
       onClick(elementIndex);
+      onChange('');
     },
     onSelectChange: (event: TChangeEvent) => {
       event.stopPropagation();
