@@ -12,5 +12,9 @@ $main-margin: calc(47% * 100 / 1920);
     right: 12px;
     z-index: 100;
     display: flex;
+
+    & *:not(:last-child) {
+      margin-right: 6px;
+    }
   }
 }

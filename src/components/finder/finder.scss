@@ -11,6 +11,7 @@ $color-input-bg: #fff;
   border-radius: 50px;
 
   &__button {
+    cursor: pointer;
     width: 36px;
     height: 36px;
     border-radius: 50px;
@@ -25,5 +26,6 @@ $color-input-bg: #fff;
     height: 20px;
     background: $color-input-bg;
     border-radius: 50px;
+    margin-left: 8px;
   }
 }

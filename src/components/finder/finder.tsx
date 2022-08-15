@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { TChangeEvent } from '../../index.types';
 import LensSvg from '../lens-svg/lens-svg';
+import { TFinderProps } from './finder.types';
 
 const styles = {
   main: 'Finder',
@@ -7,17 +9,22 @@ const styles = {
   input: 'Finder__input',
 };
 
-function Finder() {
-  const [isOpen, setIsOpen] = useState(false);
+function Finder({
+  isOpen, elementIndex, onClick, onChange,
+}: TFinderProps) {
   const callbacks = {
     onButtonClick: () => {
-      setIsOpen(!isOpen);
+      onClick(elementIndex);
+    },
+    onSelectChange: (event: TChangeEvent) => {
+      event.stopPropagation();
+      onChange();
     },
   };
   return (
     <div className={styles.main}>
       {
-        (isOpen) && (<input style={{ marginLeft: '8px' }} className={styles.input} />)
+        (isOpen) && (<input type="text" className={styles.input} onChange={callbacks.onSelectChange} />)
       }
       <button className={styles.button} type="button" onClick={callbacks.onButtonClick}>
         <LensSvg />
