@@ -37,7 +37,6 @@ function App({ data }: TAppProps) {
   const [netsShowState, setNetsShowState] = useState(
     new Array(data.length).fill(true),
   );
-  const [lastNetIndex, setLastNetIndex] = useState(data.length - 1);
   useEffect(() => {
     const height = {
       container: refContent.current?.clientHeight as number,
@@ -45,14 +44,14 @@ function App({ data }: TAppProps) {
       additional: 36,
     };
     setHeightVertLine(
-      lastNetIndex === 0
+      data.length === 1
         ? height.additional
         : height.container - height.lastItem + height.additional,
     );
   }, [isChangeNotLast]);
   const callbacks = {
     onOpenNet: (netIndex: number) => {
-      if (lastNetIndex > netIndex) {
+      if (data.length > netIndex + 1) {
         setIsChangeNotLast(!isChangeNotLast);
       }
     },
@@ -66,10 +65,7 @@ function App({ data }: TAppProps) {
       setNetsShowState(
         netsShowState.map((isShow, index) => (index === optionValue ? !isShow : isShow)),
       );
-      netsShowState.forEach((isOpen, index) => {
-        if (isOpen) setLastNetIndex(index);
-      });
-      if (lastNetIndex > optionValue) {
+      if (data.length > optionValue + 1) {
         setIsChangeNotLast(!isChangeNotLast);
       }
     },
@@ -106,7 +102,7 @@ function App({ data }: TAppProps) {
               netsShowState[index]
                 ? (
                   <div
-                    ref={lastNetIndex === index ? refLastItem : null}
+                    ref={data.length === (index + 1) ? refLastItem : null}
                     className={styles.content.item}
                     key={`Net-${index}`}
                   >
