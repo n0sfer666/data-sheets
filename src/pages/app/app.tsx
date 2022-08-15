@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { container } from 'webpack';
 import Finder from '../../components/finder/finder';
 import Layout from '../../components/layout/layout';
 import Net from '../../components/net/net';
-import Remover from '../../components/remover/remover';
+// import Remover from '../../components/remover/remover';
 import { TAppProps, TChangeEvent } from './app.types';
 
 const styles = {
@@ -61,12 +60,12 @@ function App({ data }: TAppProps) {
   return (
     <Layout footer={(
       <>
-        <Remover
+        {/* <Remover
           elementIndex={footerIndexes.remover}
           onClick={callbacks.onClickFooterElement}
           onChange={callbacks.onChangeRemover}
           isOpen={footerOpenState[footerIndexes.remover]}
-        />
+        /> */}
         <Finder
           elementIndex={footerIndexes.finder}
           onClick={callbacks.onClickFooterElement}
