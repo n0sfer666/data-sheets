@@ -18,7 +18,8 @@ function Finder({
     },
     onSelectChange: (event: TChangeEvent) => {
       event.stopPropagation();
-      onChange();
+      const { value } = event.currentTarget;
+      onChange(value);
     },
   };
   return (

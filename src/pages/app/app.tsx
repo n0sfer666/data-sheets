@@ -60,7 +60,13 @@ function App({ data }: TAppProps) {
         footerOpenState.map((isOpen, index) => (elementIndex === index ? !isOpen : false)),
       );
     },
-    onChangeFinder: (event: TChangeEvent) => { console.log('Finder'); },
+    onChangeFinder: (inputValue: string) => {
+      setNetsShowState(
+        netsShowState.map(
+          (_, index) => data[index].title.search(inputValue) >= 0,
+        ),
+      );
+    },
     onChangeRemover: (optionValue: number) => {
       setNetsShowState(
         netsShowState.map((isShow, index) => (index === optionValue ? !isShow : isShow)),
