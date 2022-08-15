@@ -1,0 +1,31 @@
+$color-bg: #C4C4C4;
+$color-input-bg: #fff;
+.Remover {
+  height: 36px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-bg;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+
+  &__button {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__select {
+    border: none;
+    width: 107px;
+    height: 20px;
+    background: $color-input-bg;
+    border-radius: 50px;
+    margin-right: 8px;
+  }
+}
