@@ -26,6 +26,14 @@ const footerIndexes = {
   finder: 1,
 };
 
+const getLastItemHeight = (container: React.RefObject<HTMLDivElement>): number => {
+  if (container.current) {
+    const { lastChild } = container.current;
+    return (lastChild as HTMLElement).offsetHeight;
+  }
+  return 0;
+};
+
 function App({ data }: TAppProps) {
   const refContent = useRef<HTMLDivElement>(null);
   const refLastItem = useRef<HTMLDivElement>(null);
@@ -38,9 +46,15 @@ function App({ data }: TAppProps) {
     new Array(data.length).fill(true),
   );
   useEffect(() => {
+    const container = refContent.current
+      ? refContent.current.clientHeight
+      : 0;
+    const lastItem = refLastItem.current
+      ? refLastItem.current.clientHeight
+      : getLastItemHeight(refContent);
     const height = {
-      container: refContent.current?.clientHeight as number,
-      lastItem: refLastItem.current?.clientHeight as number,
+      container,
+      lastItem,
       additional: 36,
     };
     setHeightVertLine(
@@ -66,14 +80,13 @@ function App({ data }: TAppProps) {
           (_, index) => data[index].title.search(inputValue) >= 0,
         ),
       );
+      setIsChangeNotLast(!isChangeNotLast);
     },
     onChangeRemover: (optionValue: number) => {
       setNetsShowState(
         netsShowState.map((isShow, index) => (index === optionValue ? !isShow : isShow)),
       );
-      if (data.length > optionValue + 1) {
-        setIsChangeNotLast(!isChangeNotLast);
-      }
+      setIsChangeNotLast(!isChangeNotLast);
     },
   };
   return (
