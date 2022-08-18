@@ -55,10 +55,10 @@ function App({ data }: TAppProps) {
     const height = {
       container,
       lastItem,
-      additional: 36,
+      additional: 38,
     };
     setHeightVertLine(
-      data.length === 1
+      data.length === 1 || refContent.current!.childElementCount <= 2
         ? height.additional
         : height.container - height.lastItem + height.additional,
     );
